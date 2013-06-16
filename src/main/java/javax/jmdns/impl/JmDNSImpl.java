@@ -1812,7 +1812,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             if (logger.isLoggable(Level.FINER)) {
                 logger.finer("Wait for JmDNS cancel: " + this);
             }
-            this.waitForCanceled(DNSConstants.CLOSE_TIMEOUT);
+            this.waitForCanceled(50);
 
             // Stop the canceler timer
             logger.finer("Canceling the state timer");
