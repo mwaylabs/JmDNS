@@ -50,7 +50,7 @@ import javax.jmdns.impl.tasks.DNSTask;
 
 /**
  * mDNS implementation in Java.
- *
+ * 
  * @author Arthur van Hoff, Rick Blair, Jeff Sonstein, Werner Randelshofer, Pierre Frisch, Scott Lewis
  */
 public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarter {
@@ -122,10 +122,10 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             private final String      _key;
             private final String      _value;
 
-            public SubTypeEntry(String subtype) {
+            public SubTypeEntry(final String subtype) {
                 super();
-                _value = (subtype != null ? subtype : "");
-                _key = _value.toLowerCase();
+                this._value = (subtype != null ? subtype : "");
+                this._key = this._value.toLowerCase();
             }
 
             /**
@@ -133,7 +133,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
              */
             @Override
             public String getKey() {
-                return _key;
+                return this._key;
             }
 
             /**
@@ -141,12 +141,12 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
              */
             @Override
             public String getValue() {
-                return _value;
+                return this._value;
             }
 
             /**
              * Replaces the value corresponding to this entry with the specified value (optional operation). This implementation simply throws <tt>UnsupportedOperationException</tt>, as this class implements an <i>immutable</i> map entry.
-             *
+             * 
              * @param value
              *            new value to be stored in this entry
              * @return (Does not return)
@@ -154,7 +154,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
              *                always
              */
             @Override
-            public String setValue(String value) {
+            public String setValue(final String value) {
                 throw new UnsupportedOperationException();
             }
 
@@ -162,7 +162,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
              * {@inheritDoc}
              */
             @Override
-            public boolean equals(Object entry) {
+            public boolean equals(final Object entry) {
                 if (!(entry instanceof Map.Entry)) {
                     return false;
                 }
@@ -174,7 +174,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
              */
             @Override
             public int hashCode() {
-                return (_key == null ? 0 : _key.hashCode()) ^ (_value == null ? 0 : _value.hashCode());
+                return (this._key == null ? 0 : this._key.hashCode()) ^ (this._value == null ? 0 : this._value.hashCode());
             }
 
             /*
@@ -192,12 +192,12 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
              */
             @Override
             public String toString() {
-                return _key + "=" + _value;
+                return this._key + "=" + this._value;
             }
 
         }
 
-        public ServiceTypeEntry(String type) {
+        public ServiceTypeEntry(final String type) {
             super();
             this._type = type;
             this._entrySet = new HashSet<Map.Entry<String, String>>();
@@ -205,11 +205,11 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
         /**
          * The type associated with this entry.
-         *
+         * 
          * @return the type
          */
         public String getType() {
-            return _type;
+            return this._type;
         }
 
         /*
@@ -218,40 +218,40 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
          */
         @Override
         public Set<Map.Entry<String, String>> entrySet() {
-            return _entrySet;
+            return this._entrySet;
         }
 
         /**
          * Returns <code>true</code> if this set contains the specified element. More formally, returns <code>true</code> if and only if this set contains an element <code>e</code> such that
          * <code>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</code>.
-         *
+         * 
          * @param subtype
          *            element whose presence in this set is to be tested
          * @return <code>true</code> if this set contains the specified element
          */
-        public boolean contains(String subtype) {
+        public boolean contains(final String subtype) {
             return subtype != null && this.containsKey(subtype.toLowerCase());
         }
 
         /**
          * Adds the specified element to this set if it is not already present. More formally, adds the specified element <code>e</code> to this set if this set contains no element <code>e2</code> such that
          * <code>(e==null&nbsp;?&nbsp;e2==null&nbsp;:&nbsp;e.equals(e2))</code>. If this set already contains the element, the call leaves the set unchanged and returns <code>false</code>.
-         *
+         * 
          * @param subtype
          *            element to be added to this set
          * @return <code>true</code> if this set did not already contain the specified element
          */
-        public boolean add(String subtype) {
+        public boolean add(final String subtype) {
             if (subtype == null || this.contains(subtype)) {
                 return false;
             }
-            _entrySet.add(new SubTypeEntry(subtype));
+            this._entrySet.add(new SubTypeEntry(subtype));
             return true;
         }
 
         /**
          * Returns an iterator over the elements in this set. The elements are returned in no particular order (unless this set is an instance of some class that provides a guarantee).
-         *
+         * 
          * @return an iterator over the elements in this set
          */
         public Iterator<String> iterator() {
@@ -264,8 +264,8 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
          */
         @Override
         public ServiceTypeEntry clone() {
-            ServiceTypeEntry entry = new ServiceTypeEntry(this.getType());
-            for (Map.Entry<String, String> subTypeEntry : this.entrySet()) {
+            final ServiceTypeEntry entry = new ServiceTypeEntry(this.getType());
+            for (final Map.Entry<String, String> subTypeEntry : this.entrySet()) {
                 entry.add(subTypeEntry.getValue());
             }
             return entry;
@@ -281,7 +281,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             if (this.isEmpty()) {
                 aLog.append("empty");
             } else {
-                for (String value : this.values()) {
+                for (final String value : this.values()) {
                     aLog.append(value);
                     aLog.append(", ");
                 }
@@ -348,7 +348,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * This hashtable is used to maintain a list of service types being collected by this JmDNS instance. The key of the hashtable is a service type name, the value is an instance of JmDNS.ServiceCollector.
-     *
+     * 
      * @see #list
      */
     private final ConcurrentMap<String, ServiceCollector> _serviceCollectors;
@@ -357,17 +357,17 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Main method to display API information if run from java -jar
-     *
+     * 
      * @param argv
      *            the command line arguments
      */
-    public static void main(String[] argv) {
+    public static void main(final String[] argv) {
         String version = null;
         try {
             final Properties pomProperties = new Properties();
             pomProperties.load(JmDNSImpl.class.getResourceAsStream("/META-INF/maven/javax.jmdns/jmdns/pom.properties"));
             version = pomProperties.getProperty("version");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             version = "RUNNING.IN.IDE.FULL";
         }
         System.out.println("JmDNS version \"" + version + "\"");
@@ -382,30 +382,30 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Create an instance of JmDNS and bind it to a specific network interface given its IP-address.
-     *
+     * 
      * @param address
      *            IP address to bind to.
      * @param name
      *            name of the newly created JmDNS
      * @exception IOException
      */
-    public JmDNSImpl(InetAddress address, String name) throws IOException {
+    public JmDNSImpl(final InetAddress address, final String name) throws IOException {
         super();
         if (logger.isLoggable(Level.FINER)) {
             logger.finer("JmDNS instance created");
         }
-        _cache = new DNSCache(100);
+        this._cache = new DNSCache(100);
 
-        _listeners = Collections.synchronizedList(new ArrayList<DNSListener>());
-        _serviceListeners = new ConcurrentHashMap<String, List<ServiceListenerStatus>>();
-        _typeListeners = Collections.synchronizedSet(new HashSet<ServiceTypeListenerStatus>());
-        _serviceCollectors = new ConcurrentHashMap<String, ServiceCollector>();
+        this._listeners = Collections.synchronizedList(new ArrayList<DNSListener>());
+        this._serviceListeners = new ConcurrentHashMap<String, List<ServiceListenerStatus>>();
+        this._typeListeners = Collections.synchronizedSet(new HashSet<ServiceTypeListenerStatus>());
+        this._serviceCollectors = new ConcurrentHashMap<String, ServiceCollector>();
 
-        _services = new ConcurrentHashMap<String, ServiceInfo>(20);
-        _serviceTypes = new ConcurrentHashMap<String, ServiceTypeEntry>(20);
+        this._services = new ConcurrentHashMap<String, ServiceInfo>(20);
+        this._serviceTypes = new ConcurrentHashMap<String, ServiceTypeEntry>(20);
 
-        _localHost = HostInfo.newHostInfo(address, this, name);
-        _name = (name != null ? name : _localHost.getName());
+        this._localHost = HostInfo.newHostInfo(address, this, name);
+        this._name = (name != null ? name : this._localHost.getName());
 
         // _cancelerTimer = new Timer("JmDNS.cancelerTimer");
 
@@ -423,13 +423,13 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         this.startReaper();
     }
 
-    private void start(Collection<? extends ServiceInfo> serviceInfos) {
-        if (_incomingListener == null) {
-            _incomingListener = new SocketListener(this);
-            _incomingListener.start();
+    private void start(final Collection<? extends ServiceInfo> serviceInfos) {
+        if (this._incomingListener == null) {
+            this._incomingListener = new SocketListener(this);
+            this._incomingListener.start();
         }
         this.startProber();
-        for (ServiceInfo info : serviceInfos) {
+        for (final ServiceInfo info : serviceInfos) {
             try {
                 this.registerService(new ServiceInfoImpl(info));
             } catch (final Exception exception) {
@@ -438,29 +438,29 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         }
     }
 
-    private void openMulticastSocket(HostInfo hostInfo) throws IOException {
-        if (_group == null) {
+    private void openMulticastSocket(final HostInfo hostInfo) throws IOException {
+        if (this._group == null) {
             if (hostInfo.getInetAddress() instanceof Inet6Address) {
-                _group = InetAddress.getByName(DNSConstants.MDNS_GROUP_IPV6);
+                this._group = InetAddress.getByName(DNSConstants.MDNS_GROUP_IPV6);
             } else {
-                _group = InetAddress.getByName(DNSConstants.MDNS_GROUP);
+                this._group = InetAddress.getByName(DNSConstants.MDNS_GROUP);
             }
         }
-        if (_socket != null) {
+        if (this._socket != null) {
             this.closeMulticastSocket();
         }
-        _socket = new MulticastSocket(DNSConstants.MDNS_PORT);
+        this._socket = new MulticastSocket(DNSConstants.MDNS_PORT);
         if ((hostInfo != null) && (hostInfo.getInterface() != null)) {
             try {
-                _socket.setNetworkInterface(hostInfo.getInterface());
-            } catch (SocketException e) {
+                this._socket.setNetworkInterface(hostInfo.getInterface());
+            } catch (final SocketException e) {
                 if (logger.isLoggable(Level.FINE)) {
                     logger.fine("openMulticastSocket() Set network interface exception: " + e.getMessage());
                 }
             }
         }
-        _socket.setTimeToLive(255);
-        _socket.joinGroup(_group);
+        this._socket.setTimeToLive(255);
+        this._socket.joinGroup(this._group);
     }
 
     private void closeMulticastSocket() {
@@ -469,41 +469,41 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         if (logger.isLoggable(Level.FINER)) {
             logger.finer("closeMulticastSocket()");
         }
-        if (_socket != null) {
+        if (this._socket != null) {
             // close socket
             try {
                 try {
-                    _socket.leaveGroup(_group);
-                } catch (SocketException exception) {
+                    this._socket.leaveGroup(this._group);
+                } catch (final SocketException exception) {
                     //
                 }
-                _socket.close();
+                this._socket.close();
                 // jP: 20010-01-18. It isn't safe to join() on the listener
                 // thread - it attempts to lock the IoLock object, and deadlock
                 // ensues. Per issue #2933183, changed this to wait on the JmDNS
                 // monitor, checking on each notify (or timeout) that the
                 // listener thread has stopped.
                 //
-                while (_incomingListener != null && _incomingListener.isAlive()) {
+                while (this._incomingListener != null && this._incomingListener.isAlive()) {
                     synchronized (this) {
                         try {
-                            if (_incomingListener != null && _incomingListener.isAlive()) {
+                            if (this._incomingListener != null && this._incomingListener.isAlive()) {
                                 // wait time is arbitrary, we're really expecting notification.
                                 if (logger.isLoggable(Level.FINER)) {
                                     logger.finer("closeMulticastSocket(): waiting for jmDNS monitor");
                                 }
                                 this.wait(1000);
                             }
-                        } catch (InterruptedException ignored) {
+                        } catch (final InterruptedException ignored) {
                             // Ignored
                         }
                     }
                 }
-                _incomingListener = null;
+                this._incomingListener = null;
             } catch (final Exception exception) {
                 logger.log(Level.WARNING, "closeMulticastSocket() Close socket exception ", exception);
             }
-            _socket = null;
+            this._socket = null;
         }
     }
 
@@ -512,7 +512,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public boolean advanceState(DNSTask task) {
+    public boolean advanceState(final DNSTask task) {
         return this._localHost.advanceState(task);
     }
 
@@ -560,7 +560,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void associateWithTask(DNSTask task, DNSState state) {
+    public void associateWithTask(final DNSTask task, final DNSState state) {
         this._localHost.associateWithTask(task, state);
     }
 
@@ -568,7 +568,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void removeAssociationWithTask(DNSTask task) {
+    public void removeAssociationWithTask(final DNSTask task) {
         this._localHost.removeAssociationWithTask(task);
     }
 
@@ -576,7 +576,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public boolean isAssociatedWithTask(DNSTask task, DNSState state) {
+    public boolean isAssociatedWithTask(final DNSTask task, final DNSState state) {
         return this._localHost.isAssociatedWithTask(task, state);
     }
 
@@ -640,7 +640,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public boolean waitForAnnounced(long timeout) {
+    public boolean waitForAnnounced(final long timeout) {
         return this._localHost.waitForAnnounced(timeout);
     }
 
@@ -648,17 +648,17 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public boolean waitForCanceled(long timeout) {
+    public boolean waitForCanceled(final long timeout) {
         return this._localHost.waitForCanceled(timeout);
     }
 
     /**
      * Return the DNSCache associated with the cache variable
-     *
+     * 
      * @return DNS cache
      */
     public DNSCache getCache() {
-        return _cache;
+        return this._cache;
     }
 
     /**
@@ -666,7 +666,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      */
     @Override
     public String getName() {
-        return _name;
+        return this._name;
     }
 
     /**
@@ -674,16 +674,16 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      */
     @Override
     public String getHostName() {
-        return _localHost.getName();
+        return this._localHost.getName();
     }
 
     /**
      * Returns the local host info
-     *
+     * 
      * @return local host info
      */
     public HostInfo getLocalHost() {
-        return _localHost;
+        return this._localHost;
     }
 
     /**
@@ -691,14 +691,14 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      */
     @Override
     public InetAddress getInterface() throws IOException {
-        return _socket.getInterface();
+        return this._socket.getInterface();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ServiceInfo getServiceInfo(String type, String name) {
+    public ServiceInfo getServiceInfo(final String type, final String name) {
         return this.getServiceInfo(type, name, false, DNSConstants.SERVICE_INFO_TIMEOUT);
     }
 
@@ -706,7 +706,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public ServiceInfo getServiceInfo(String type, String name, long timeout) {
+    public ServiceInfo getServiceInfo(final String type, final String name, final long timeout) {
         return this.getServiceInfo(type, name, false, timeout);
     }
 
@@ -714,7 +714,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public ServiceInfo getServiceInfo(String type, String name, boolean persistent) {
+    public ServiceInfo getServiceInfo(final String type, final String name, final boolean persistent) {
         return this.getServiceInfo(type, name, persistent, DNSConstants.SERVICE_INFO_TIMEOUT);
     }
 
@@ -722,18 +722,18 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public ServiceInfo getServiceInfo(String type, String name, boolean persistent, long timeout) {
+    public ServiceInfo getServiceInfo(final String type, final String name, final boolean persistent, final long timeout) {
         final ServiceInfoImpl info = this.resolveServiceInfo(type, name, "", persistent);
         this.waitForInfoData(info, timeout);
         return (info.hasData() ? info : null);
     }
 
-    ServiceInfoImpl resolveServiceInfo(String type, String name, String subtype, boolean persistent) {
+    ServiceInfoImpl resolveServiceInfo(final String type, final String name, final String subtype, final boolean persistent) {
         this.cleanCache();
-        String loType = type.toLowerCase();
+        final String loType = type.toLowerCase();
         this.registerServiceType(type);
-        if (_serviceCollectors.putIfAbsent(loType, new ServiceCollector(type)) == null) {
-            this.addServiceListener(loType, _serviceCollectors.get(loType), ListenerStatus.SYNCHONEOUS);
+        if (this._serviceCollectors.putIfAbsent(loType, new ServiceCollector(type)) == null) {
+            this.addServiceListener(loType, this._serviceCollectors.get(loType), ListenerStatus.SYNCHONEOUS);
         }
 
         // Check if the answer is in the cache.
@@ -744,21 +744,21 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         return info;
     }
 
-    ServiceInfoImpl getServiceInfoFromCache(String type, String name, String subtype, boolean persistent) {
+    ServiceInfoImpl getServiceInfoFromCache(final String type, final String name, final String subtype, final boolean persistent) {
         // Check if the answer is in the cache.
         ServiceInfoImpl info = new ServiceInfoImpl(type, name, subtype, 0, 0, 0, persistent, (byte[]) null);
-        DNSEntry pointerEntry = this.getCache().getDNSEntry(new DNSRecord.Pointer(type, DNSRecordClass.CLASS_ANY, false, 0, info.getQualifiedName()));
+        final DNSEntry pointerEntry = this.getCache().getDNSEntry(new DNSRecord.Pointer(type, DNSRecordClass.CLASS_ANY, false, 0, info.getQualifiedName()));
         if (pointerEntry instanceof DNSRecord) {
             ServiceInfoImpl cachedInfo = (ServiceInfoImpl) ((DNSRecord) pointerEntry).getServiceInfo(persistent);
             if (cachedInfo != null) {
                 // To get a complete info record we need to retrieve the service, address and the text bytes.
 
-                Map<Fields, String> map = cachedInfo.getQualifiedNameMap();
+                final Map<Fields, String> map = cachedInfo.getQualifiedNameMap();
                 byte[] srvBytes = null;
                 String server = "";
-                DNSEntry serviceEntry = this.getCache().getDNSEntry(info.getQualifiedName(), DNSRecordType.TYPE_SRV, DNSRecordClass.CLASS_ANY);
+                final DNSEntry serviceEntry = this.getCache().getDNSEntry(info.getQualifiedName(), DNSRecordType.TYPE_SRV, DNSRecordClass.CLASS_ANY);
                 if (serviceEntry instanceof DNSRecord) {
-                    ServiceInfo cachedServiceEntryInfo = ((DNSRecord) serviceEntry).getServiceInfo(persistent);
+                    final ServiceInfo cachedServiceEntryInfo = ((DNSRecord) serviceEntry).getServiceInfo(persistent);
                     if (cachedServiceEntryInfo != null) {
                         cachedInfo = new ServiceInfoImpl(map, cachedServiceEntryInfo.getPort(), cachedServiceEntryInfo.getWeight(), cachedServiceEntryInfo.getPriority(), persistent, (byte[]) null);
                         srvBytes = cachedServiceEntryInfo.getTextBytes();
@@ -767,9 +767,9 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                 }
                 DNSEntry addressEntry = this.getCache().getDNSEntry(server, DNSRecordType.TYPE_A, DNSRecordClass.CLASS_ANY);
                 if (addressEntry instanceof DNSRecord) {
-                    ServiceInfo cachedAddressInfo = ((DNSRecord) addressEntry).getServiceInfo(persistent);
+                    final ServiceInfo cachedAddressInfo = ((DNSRecord) addressEntry).getServiceInfo(persistent);
                     if (cachedAddressInfo != null) {
-                        for (Inet4Address address : cachedAddressInfo.getInet4Addresses()) {
+                        for (final Inet4Address address : cachedAddressInfo.getInet4Addresses()) {
                             cachedInfo.addAddress(address);
                         }
                         cachedInfo._setText(cachedAddressInfo.getTextBytes());
@@ -777,17 +777,17 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                 }
                 addressEntry = this.getCache().getDNSEntry(server, DNSRecordType.TYPE_AAAA, DNSRecordClass.CLASS_ANY);
                 if (addressEntry instanceof DNSRecord) {
-                    ServiceInfo cachedAddressInfo = ((DNSRecord) addressEntry).getServiceInfo(persistent);
+                    final ServiceInfo cachedAddressInfo = ((DNSRecord) addressEntry).getServiceInfo(persistent);
                     if (cachedAddressInfo != null) {
-                        for (Inet6Address address : cachedAddressInfo.getInet6Addresses()) {
+                        for (final Inet6Address address : cachedAddressInfo.getInet6Addresses()) {
                             cachedInfo.addAddress(address);
                         }
                         cachedInfo._setText(cachedAddressInfo.getTextBytes());
                     }
                 }
-                DNSEntry textEntry = this.getCache().getDNSEntry(cachedInfo.getQualifiedName(), DNSRecordType.TYPE_TXT, DNSRecordClass.CLASS_ANY);
+                final DNSEntry textEntry = this.getCache().getDNSEntry(cachedInfo.getQualifiedName(), DNSRecordType.TYPE_TXT, DNSRecordClass.CLASS_ANY);
                 if (textEntry instanceof DNSRecord) {
-                    ServiceInfo cachedTextInfo = ((DNSRecord) textEntry).getServiceInfo(persistent);
+                    final ServiceInfo cachedTextInfo = ((DNSRecord) textEntry).getServiceInfo(persistent);
                     if (cachedTextInfo != null) {
                         cachedInfo._setText(cachedTextInfo.getTextBytes());
                     }
@@ -803,7 +803,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         return info;
     }
 
-    private void waitForInfoData(ServiceInfo info, long timeout) {
+    private void waitForInfoData(final ServiceInfo info, final long timeout) {
         synchronized (info) {
             long loops = (timeout / 200L);
             if (loops < 1) {
@@ -826,7 +826,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void requestServiceInfo(String type, String name) {
+    public void requestServiceInfo(final String type, final String name) {
         this.requestServiceInfo(type, name, false, DNSConstants.SERVICE_INFO_TIMEOUT);
     }
 
@@ -834,7 +834,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void requestServiceInfo(String type, String name, boolean persistent) {
+    public void requestServiceInfo(final String type, final String name, final boolean persistent) {
         this.requestServiceInfo(type, name, persistent, DNSConstants.SERVICE_INFO_TIMEOUT);
     }
 
@@ -842,7 +842,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void requestServiceInfo(String type, String name, long timeout) {
+    public void requestServiceInfo(final String type, final String name, final long timeout) {
         this.requestServiceInfo(type, name, false, DNSConstants.SERVICE_INFO_TIMEOUT);
     }
 
@@ -850,13 +850,13 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void requestServiceInfo(String type, String name, boolean persistent, long timeout) {
+    public void requestServiceInfo(final String type, final String name, final boolean persistent, final long timeout) {
         final ServiceInfoImpl info = this.resolveServiceInfo(type, name, "", persistent);
         this.waitForInfoData(info, timeout);
     }
 
-    void handleServiceResolved(ServiceEvent event) {
-        List<ServiceListenerStatus> list = _serviceListeners.get(event.getType().toLowerCase());
+    void handleServiceResolved(final ServiceEvent event) {
+        final List<ServiceListenerStatus> list = this._serviceListeners.get(event.getType().toLowerCase());
         final List<ServiceListenerStatus> listCopy;
         if ((list != null) && (!list.isEmpty())) {
             if ((event.getInfo() != null) && event.getInfo().hasData()) {
@@ -865,7 +865,10 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                     listCopy = new ArrayList<ServiceListenerStatus>(list);
                 }
                 for (final ServiceListenerStatus listener : listCopy) {
-                    _executor.submit(new Runnable() {
+                    if (this._executor.isShutdown()) {
+                        break;
+                    }
+                    this._executor.submit(new Runnable() {
                         /** {@inheritDoc} */
                         @Override
                         public void run() {
@@ -881,12 +884,12 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void addServiceTypeListener(ServiceTypeListener listener) throws IOException {
-        ServiceTypeListenerStatus status = new ServiceTypeListenerStatus(listener, ListenerStatus.ASYNCHONEOUS);
-        _typeListeners.add(status);
+    public void addServiceTypeListener(final ServiceTypeListener listener) throws IOException {
+        final ServiceTypeListenerStatus status = new ServiceTypeListenerStatus(listener, ListenerStatus.ASYNCHONEOUS);
+        this._typeListeners.add(status);
 
         // report cached service types
-        for (String type : _serviceTypes.keySet()) {
+        for (final String type : this._serviceTypes.keySet()) {
             status.serviceTypeAdded(new ServiceEventImpl(this, type, "", null));
         }
 
@@ -897,31 +900,31 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void removeServiceTypeListener(ServiceTypeListener listener) {
-        ServiceTypeListenerStatus status = new ServiceTypeListenerStatus(listener, ListenerStatus.ASYNCHONEOUS);
-        _typeListeners.remove(status);
+    public void removeServiceTypeListener(final ServiceTypeListener listener) {
+        final ServiceTypeListenerStatus status = new ServiceTypeListenerStatus(listener, ListenerStatus.ASYNCHONEOUS);
+        this._typeListeners.remove(status);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addServiceListener(String type, ServiceListener listener) {
+    public void addServiceListener(final String type, final ServiceListener listener) {
         this.addServiceListener(type, listener, ListenerStatus.ASYNCHONEOUS);
     }
 
-    private void addServiceListener(String type, ServiceListener listener, boolean synch) {
-        ServiceListenerStatus status = new ServiceListenerStatus(listener, synch);
+    private void addServiceListener(final String type, final ServiceListener listener, final boolean synch) {
+        final ServiceListenerStatus status = new ServiceListenerStatus(listener, synch);
         final String loType = type.toLowerCase();
-        List<ServiceListenerStatus> list = _serviceListeners.get(loType);
+        List<ServiceListenerStatus> list = this._serviceListeners.get(loType);
         if (list == null) {
-            if (_serviceListeners.putIfAbsent(loType, new LinkedList<ServiceListenerStatus>()) == null) {
-                if (_serviceCollectors.putIfAbsent(loType, new ServiceCollector(type)) == null) {
+            if (this._serviceListeners.putIfAbsent(loType, new LinkedList<ServiceListenerStatus>()) == null) {
+                if (this._serviceCollectors.putIfAbsent(loType, new ServiceCollector(type)) == null) {
                     // We have a problem here. The service collectors must be called synchronously so that their cache get cleaned up immediately or we will report .
-                    this.addServiceListener(loType, _serviceCollectors.get(loType), ListenerStatus.SYNCHONEOUS);
+                    this.addServiceListener(loType, this._serviceCollectors.get(loType), ListenerStatus.SYNCHONEOUS);
                 }
             }
-            list = _serviceListeners.get(loType);
+            list = this._serviceListeners.get(loType);
         }
         if (list != null) {
             synchronized (list) {
@@ -932,8 +935,8 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         }
         // report cached service types
         final List<ServiceEvent> serviceEvents = new ArrayList<ServiceEvent>();
-        Collection<DNSEntry> dnsEntryLits = this.getCache().allValues();
-        for (DNSEntry entry : dnsEntryLits) {
+        final Collection<DNSEntry> dnsEntryLits = this.getCache().allValues();
+        for (final DNSEntry entry : dnsEntryLits) {
             final DNSRecord record = (DNSRecord) entry;
             if (record.getRecordType() == DNSRecordType.TYPE_SRV) {
                 if (record.getKey().endsWith(loType)) {
@@ -944,7 +947,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             }
         }
         // Actually call listener with all service events added above
-        for (ServiceEvent serviceEvent : serviceEvents) {
+        for (final ServiceEvent serviceEvent : serviceEvents) {
             status.serviceAdded(serviceEvent);
         }
         // Create/start ServiceResolver
@@ -955,15 +958,15 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void removeServiceListener(String type, ServiceListener listener) {
-        String loType = type.toLowerCase();
-        List<ServiceListenerStatus> list = _serviceListeners.get(loType);
+    public void removeServiceListener(final String type, final ServiceListener listener) {
+        final String loType = type.toLowerCase();
+        final List<ServiceListenerStatus> list = this._serviceListeners.get(loType);
         if (list != null) {
             synchronized (list) {
-                ServiceListenerStatus status = new ServiceListenerStatus(listener, ListenerStatus.ASYNCHONEOUS);
+                final ServiceListenerStatus status = new ServiceListenerStatus(listener, ListenerStatus.ASYNCHONEOUS);
                 list.remove(status);
                 if (list.isEmpty()) {
-                    _serviceListeners.remove(loType, list);
+                    this._serviceListeners.remove(loType, list);
                 }
             }
         }
@@ -973,7 +976,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void registerService(ServiceInfo infoAbstract) throws IOException {
+    public void registerService(final ServiceInfo infoAbstract) throws IOException {
         if (this.isClosing() || this.isClosed()) {
             throw new IllegalStateException("This DNS is closed.");
         }
@@ -982,7 +985,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         if (info.getDns() != null) {
             if (info.getDns() != this) {
                 throw new IllegalStateException("A service information can only be registered with a single instamce of JmDNS.");
-            } else if (_services.get(info.getKey()) != null) {
+            } else if (this._services.get(info.getKey()) != null) {
                 throw new IllegalStateException("A service information can only be registered once.");
             }
         }
@@ -992,14 +995,14 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
         // bind the service to this address
         info.recoverState();
-        info.setServer(_localHost.getName());
-        info.addAddress(_localHost.getInet4Address());
-        info.addAddress(_localHost.getInet6Address());
+        info.setServer(this._localHost.getName());
+        info.addAddress(this._localHost.getInet4Address());
+        info.addAddress(this._localHost.getInet6Address());
 
         this.waitForAnnounced(DNSConstants.SERVICE_INFO_TIMEOUT);
 
         this.makeServiceNameUnique(info);
-        while (_services.putIfAbsent(info.getKey(), info) != null) {
+        while (this._services.putIfAbsent(info.getKey(), info) != null) {
             this.makeServiceNameUnique(info);
         }
 
@@ -1015,15 +1018,15 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public void unregisterService(ServiceInfo infoAbstract) {
-        final ServiceInfoImpl info = (ServiceInfoImpl) _services.get(infoAbstract.getKey());
+    public void unregisterService(final ServiceInfo infoAbstract) {
+        final ServiceInfoImpl info = (ServiceInfoImpl) this._services.get(infoAbstract.getKey());
 
         if (info != null) {
             info.cancelState();
             this.startCanceler();
             info.waitForCanceled(DNSConstants.CLOSE_TIMEOUT);
 
-            _services.remove(info.getKey(), info);
+            this._services.remove(info.getKey(), info);
             if (logger.isLoggable(Level.FINE)) {
                 logger.fine("unregisterService() JmDNS unregistered service as " + info);
             }
@@ -1041,8 +1044,8 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             logger.finer("unregisterAllServices()");
         }
 
-        for (String name : _services.keySet()) {
-            ServiceInfoImpl info = (ServiceInfoImpl) _services.get(name);
+        for (final String name : this._services.keySet()) {
+            final ServiceInfoImpl info = (ServiceInfoImpl) this._services.get(name);
             if (info != null) {
                 if (logger.isLoggable(Level.FINER)) {
                     logger.finer("Cancelling service info: " + info);
@@ -1052,14 +1055,14 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         }
         this.startCanceler();
 
-        for (String name : _services.keySet()) {
-            ServiceInfoImpl info = (ServiceInfoImpl) _services.get(name);
+        for (final String name : this._services.keySet()) {
+            final ServiceInfoImpl info = (ServiceInfoImpl) this._services.get(name);
             if (info != null) {
                 if (logger.isLoggable(Level.FINER)) {
                     logger.finer("Wait for service info cancel: " + info);
                 }
                 info.waitForCanceled(DNSConstants.CLOSE_TIMEOUT);
-                _services.remove(name, info);
+                this._services.remove(name, info);
             }
         }
 
@@ -1069,26 +1072,29 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public boolean registerServiceType(String type) {
+    public boolean registerServiceType(final String type) {
         boolean typeAdded = false;
-        Map<Fields, String> map = ServiceInfoImpl.decodeQualifiedNameMapForType(type);
-        String domain = map.get(Fields.Domain);
-        String protocol = map.get(Fields.Protocol);
-        String application = map.get(Fields.Application);
-        String subtype = map.get(Fields.Subtype);
+        final Map<Fields, String> map = ServiceInfoImpl.decodeQualifiedNameMapForType(type);
+        final String domain = map.get(Fields.Domain);
+        final String protocol = map.get(Fields.Protocol);
+        final String application = map.get(Fields.Application);
+        final String subtype = map.get(Fields.Subtype);
 
         final String name = (application.length() > 0 ? "_" + application + "." : "") + (protocol.length() > 0 ? "_" + protocol + "." : "") + domain + ".";
         final String loname = name.toLowerCase();
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(this.getName() + ".registering service type: " + type + " as: " + name + (subtype.length() > 0 ? " subtype: " + subtype : ""));
         }
-        if (!_serviceTypes.containsKey(loname) && !application.toLowerCase().equals("dns-sd") && !domain.toLowerCase().endsWith("in-addr.arpa") && !domain.toLowerCase().endsWith("ip6.arpa")) {
-            typeAdded = _serviceTypes.putIfAbsent(loname, new ServiceTypeEntry(name)) == null;
+        if (!this._serviceTypes.containsKey(loname) && !application.toLowerCase().equals("dns-sd") && !domain.toLowerCase().endsWith("in-addr.arpa") && !domain.toLowerCase().endsWith("ip6.arpa")) {
+            typeAdded = this._serviceTypes.putIfAbsent(loname, new ServiceTypeEntry(name)) == null;
             if (typeAdded) {
-                final ServiceTypeListenerStatus[] list = _typeListeners.toArray(new ServiceTypeListenerStatus[_typeListeners.size()]);
+                final ServiceTypeListenerStatus[] list = this._typeListeners.toArray(new ServiceTypeListenerStatus[this._typeListeners.size()]);
                 final ServiceEvent event = new ServiceEventImpl(this, name, "", null);
                 for (final ServiceTypeListenerStatus status : list) {
-                    _executor.submit(new Runnable() {
+                    if (this._executor.isShutdown()) {
+                        break;
+                    }
+                    this._executor.submit(new Runnable() {
                         /** {@inheritDoc} */
                         @Override
                         public void run() {
@@ -1099,16 +1105,19 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             }
         }
         if (subtype.length() > 0) {
-            ServiceTypeEntry subtypes = _serviceTypes.get(loname);
+            final ServiceTypeEntry subtypes = this._serviceTypes.get(loname);
             if ((subtypes != null) && (!subtypes.contains(subtype))) {
                 synchronized (subtypes) {
                     if (!subtypes.contains(subtype)) {
                         typeAdded = true;
                         subtypes.add(subtype);
-                        final ServiceTypeListenerStatus[] list = _typeListeners.toArray(new ServiceTypeListenerStatus[_typeListeners.size()]);
+                        final ServiceTypeListenerStatus[] list = this._typeListeners.toArray(new ServiceTypeListenerStatus[this._typeListeners.size()]);
                         final ServiceEvent event = new ServiceEventImpl(this, "_" + subtype + "._sub." + name, "", null);
                         for (final ServiceTypeListenerStatus status : list) {
-                            _executor.submit(new Runnable() {
+                            if (this._executor.isShutdown()) {
+                                break;
+                            }
+                            this._executor.submit(new Runnable() {
                                 /** {@inheritDoc} */
                                 @Override
                                 public void run() {
@@ -1125,10 +1134,10 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Generate a possibly unique name for a service using the information we have in the cache.
-     *
+     * 
      * @return returns true, if the name of the service info had to be changed.
      */
-    private boolean makeServiceNameUnique(ServiceInfoImpl info) {
+    private boolean makeServiceNameUnique(final ServiceInfoImpl info) {
         final String originalQualifiedName = info.getKey();
         final long now = System.currentTimeMillis();
 
@@ -1137,14 +1146,15 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             collision = false;
 
             // Check for collision in cache
-            for (DNSEntry dnsEntry : this.getCache().getDNSEntryList(info.getKey())) {
+            for (final DNSEntry dnsEntry : this.getCache().getDNSEntryList(info.getKey())) {
                 if (DNSRecordType.TYPE_SRV.equals(dnsEntry.getRecordType()) && !dnsEntry.isExpired(now)) {
                     final DNSRecord.Service s = (DNSRecord.Service) dnsEntry;
-                    if (s.getPort() != info.getPort() || !s.getServer().equals(_localHost.getName())) {
+                    if (s.getPort() != info.getPort() || !s.getServer().equals(this._localHost.getName())) {
                         if (logger.isLoggable(Level.FINER)) {
-                            logger.finer("makeServiceNameUnique() JmDNS.makeServiceNameUnique srv collision:" + dnsEntry + " s.server=" + s.getServer() + " " + _localHost.getName() + " equals:" + (s.getServer().equals(_localHost.getName())));
+                            logger.finer("makeServiceNameUnique() JmDNS.makeServiceNameUnique srv collision:" + dnsEntry + " s.server=" + s.getServer() + " " + this._localHost.getName() + " equals:"
+                                    + (s.getServer().equals(this._localHost.getName())));
                         }
-                        info.setName(incrementName(info.getName()));
+                        info.setName(this.incrementName(info.getName()));
                         collision = true;
                         break;
                     }
@@ -1152,9 +1162,9 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             }
 
             // Check for collision with other service infos published by JmDNS
-            final ServiceInfo selfService = _services.get(info.getKey());
+            final ServiceInfo selfService = this._services.get(info.getKey());
             if (selfService != null && selfService != info) {
-                info.setName(incrementName(info.getName()));
+                info.setName(this.incrementName(info.getName()));
                 collision = true;
             }
         }
@@ -1163,7 +1173,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         return !(originalQualifiedName.equals(info.getKey()));
     }
 
-    String incrementName(String name) {
+    String incrementName(final String name) {
         String aName = name;
         try {
             final int l = aName.lastIndexOf('(');
@@ -1181,22 +1191,22 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Add a listener for a question. The listener will receive updates of answers to the question as they arrive, or from the cache if they are already available.
-     *
+     * 
      * @param listener
      *            DSN listener
      * @param question
      *            DNS query
      */
-    public void addListener(DNSListener listener, DNSQuestion question) {
+    public void addListener(final DNSListener listener, final DNSQuestion question) {
         final long now = System.currentTimeMillis();
 
         // add the new listener
-        _listeners.add(listener);
+        this._listeners.add(listener);
 
         // report existing matched records
 
         if (question != null) {
-            for (DNSEntry dnsEntry : this.getCache().getDNSEntryList(question.getName().toLowerCase())) {
+            for (final DNSEntry dnsEntry : this.getCache().getDNSEntryList(question.getName().toLowerCase())) {
                 if (question.answeredBy(dnsEntry) && !dnsEntry.isExpired(now)) {
                     listener.updateRecord(this.getCache(), now, dnsEntry);
                 }
@@ -1206,23 +1216,23 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Remove a listener from all outstanding questions. The listener will no longer receive any updates.
-     *
+     * 
      * @param listener
      *            DSN listener
      */
-    public void removeListener(DNSListener listener) {
-        _listeners.remove(listener);
+    public void removeListener(final DNSListener listener) {
+        this._listeners.remove(listener);
     }
 
     /**
      * Renew a service when the record become stale. If there is no service collector for the type this method does nothing.
-     *
+     * 
      * @param record
      *            DNS record
      */
-    public void renewServiceCollector(DNSRecord record) {
-        ServiceInfo info = record.getServiceInfo();
-        if (_serviceCollectors.containsKey(info.getType().toLowerCase())) {
+    public void renewServiceCollector(final DNSRecord record) {
+        final ServiceInfo info = record.getServiceInfo();
+        if (this._serviceCollectors.containsKey(info.getType().toLowerCase())) {
             // Create/start ServiceResolver
             this.startServiceResolver(info.getType());
         }
@@ -1231,7 +1241,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
     // Remind: Method updateRecord should receive a better name.
     /**
      * Notify all listeners that a record was updated.
-     *
+     * 
      * @param now
      *            update date
      * @param rec
@@ -1239,14 +1249,14 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * @param operation
      *            DNS cache operation
      */
-    public void updateRecord(long now, DNSRecord rec, Operation operation) {
+    public void updateRecord(final long now, final DNSRecord rec, final Operation operation) {
         // We do not want to block the entire DNS while we are updating the record for each listener (service info)
         {
             List<DNSListener> listenerList = null;
-            synchronized (_listeners) {
-                listenerList = new ArrayList<DNSListener>(_listeners);
+            synchronized (this._listeners) {
+                listenerList = new ArrayList<DNSListener>(this._listeners);
             }
-            for (DNSListener listener : listenerList) {
+            for (final DNSListener listener : listenerList) {
                 listener.updateRecord(this.getCache(), now, rec);
             }
         }
@@ -1256,13 +1266,13 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             ServiceEvent event = rec.getServiceEvent(this);
             if ((event.getInfo() == null) || !event.getInfo().hasData()) {
                 // We do not care about the subtype because the info is only used if complete and the subtype will then be included.
-                ServiceInfo info = this.getServiceInfoFromCache(event.getType(), event.getName(), "", false);
+                final ServiceInfo info = this.getServiceInfoFromCache(event.getType(), event.getName(), "", false);
                 if (info.hasData()) {
                     event = new ServiceEventImpl(this, event.getType(), event.getName(), info);
                 }
             }
 
-            List<ServiceListenerStatus> list = _serviceListeners.get(event.getType().toLowerCase());
+            final List<ServiceListenerStatus> list = this._serviceListeners.get(event.getType().toLowerCase());
             final List<ServiceListenerStatus> serviceListenerList;
             if (list != null) {
                 synchronized (list) {
@@ -1282,8 +1292,8 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                         for (final ServiceListenerStatus listener : serviceListenerList) {
                             if (listener.isSynchronous()) {
                                 listener.serviceAdded(localEvent);
-                            } else {
-                                _executor.submit(new Runnable() {
+                            } else if (!this._executor.isShutdown()) {
+                                this._executor.submit(new Runnable() {
                                     /** {@inheritDoc} */
                                     @Override
                                     public void run() {
@@ -1297,8 +1307,8 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                         for (final ServiceListenerStatus listener : serviceListenerList) {
                             if (listener.isSynchronous()) {
                                 listener.serviceRemoved(localEvent);
-                            } else {
-                                _executor.submit(new Runnable() {
+                            } else if (!this._executor.isShutdown()) {
+                                this._executor.submit(new Runnable() {
                                     /** {@inheritDoc} */
                                     @Override
                                     public void run() {
@@ -1315,7 +1325,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         }
     }
 
-    void handleRecord(DNSRecord record, long now) {
+    void handleRecord(final DNSRecord record, final long now) {
         DNSRecord newRecord = record;
 
         Operation cacheOperation = Operation.Noop;
@@ -1332,7 +1342,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                 logger.fine(this.getName() + " handle response cached record: " + cachedRecord);
             }
             if (unique) {
-                for (DNSEntry entry : this.getCache().getDNSEntryList(newRecord.getKey())) {
+                for (final DNSEntry entry : this.getCache().getDNSEntryList(newRecord.getKey())) {
                     if (newRecord.getRecordType().equals(entry.getRecordType()) && newRecord.getRecordClass().equals(entry.getRecordClass()) && (entry != cachedRecord)) {
                         ((DNSRecord) entry).setWillExpireSoon(now);
                     }
@@ -1399,16 +1409,16 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Handle an incoming response. Cache answers, and pass them on to the appropriate questions.
-     *
+     * 
      * @exception IOException
      */
-    void handleResponse(DNSIncoming msg) throws IOException {
+    void handleResponse(final DNSIncoming msg) throws IOException {
         final long now = System.currentTimeMillis();
 
         boolean hostConflictDetected = false;
         boolean serviceConflictDetected = false;
 
-        for (DNSRecord newRecord : msg.getAllAnswers()) {
+        for (final DNSRecord newRecord : msg.getAllAnswers()) {
             this.handleRecord(newRecord, now);
 
             if (DNSRecordType.TYPE_A.equals(newRecord.getRecordType()) || DNSRecordType.TYPE_AAAA.equals(newRecord.getRecordType())) {
@@ -1426,32 +1436,32 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Handle an incoming query. See if we can answer any part of it given our service infos.
-     *
+     * 
      * @param in
      * @param addr
      * @param port
      * @exception IOException
      */
-    void handleQuery(DNSIncoming in, InetAddress addr, int port) throws IOException {
+    void handleQuery(final DNSIncoming in, final InetAddress addr, final int port) throws IOException {
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(this.getName() + ".handle query: " + in);
         }
         // Track known answers
         boolean conflictDetected = false;
         final long expirationTime = System.currentTimeMillis() + DNSConstants.KNOWN_ANSWER_TTL;
-        for (DNSRecord answer : in.getAllAnswers()) {
+        for (final DNSRecord answer : in.getAllAnswers()) {
             conflictDetected |= answer.handleQuery(this, expirationTime);
         }
 
         this.ioLock();
         try {
 
-            if (_plannedAnswer != null) {
-                _plannedAnswer.append(in);
+            if (this._plannedAnswer != null) {
+                this._plannedAnswer.append(in);
             } else {
-                DNSIncoming plannedAnswer = in.clone();
+                final DNSIncoming plannedAnswer = in.clone();
                 if (in.isTruncated()) {
-                    _plannedAnswer = plannedAnswer;
+                    this._plannedAnswer = plannedAnswer;
                 }
                 this.startResponder(plannedAnswer, port);
             }
@@ -1461,7 +1471,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         }
 
         final long now = System.currentTimeMillis();
-        for (DNSRecord answer : in.getAnswers()) {
+        for (final DNSRecord answer : in.getAnswers()) {
             this.handleRecord(answer, now);
         }
 
@@ -1470,11 +1480,11 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         }
     }
 
-    public void respondToQuery(DNSIncoming in) {
+    public void respondToQuery(final DNSIncoming in) {
         this.ioLock();
         try {
-            if (_plannedAnswer == in) {
-                _plannedAnswer = null;
+            if (this._plannedAnswer == in) {
+                this._plannedAnswer = null;
             }
         } finally {
             this.ioUnlock();
@@ -1483,7 +1493,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Add an answer to a question. Deal with the case when the outgoing packet overflows
-     *
+     * 
      * @param in
      * @param addr
      * @param port
@@ -1492,7 +1502,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * @return outgoing answer
      * @exception IOException
      */
-    public DNSOutgoing addAnswer(DNSIncoming in, InetAddress addr, int port, DNSOutgoing out, DNSRecord rec) throws IOException {
+    public DNSOutgoing addAnswer(final DNSIncoming in, final InetAddress addr, final int port, final DNSOutgoing out, final DNSRecord rec) throws IOException {
         DNSOutgoing newOut = out;
         if (newOut == null) {
             newOut = new DNSOutgoing(DNSConstants.FLAGS_QR_RESPONSE | DNSConstants.FLAGS_AA, false, in.getSenderUDPPayload());
@@ -1502,7 +1512,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         } catch (final IOException e) {
             newOut.setFlags(newOut.getFlags() | DNSConstants.FLAGS_TC);
             newOut.setId(in.getId());
-            send(newOut);
+            this.send(newOut);
 
             newOut = new DNSOutgoing(DNSConstants.FLAGS_QR_RESPONSE | DNSConstants.FLAGS_AA, false, in.getSenderUDPPayload());
             newOut.addAnswer(in, rec);
@@ -1512,14 +1522,14 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * Send an outgoing multicast DNS message.
-     *
+     * 
      * @param out
      * @exception IOException
      */
-    public void send(DNSOutgoing out) throws IOException {
+    public void send(final DNSOutgoing out) throws IOException {
         if (!out.isEmpty()) {
-            byte[] message = out.data();
-            final DatagramPacket packet = new DatagramPacket(message, message.length, _group, DNSConstants.MDNS_PORT);
+            final byte[] message = out.data();
+            final DatagramPacket packet = new DatagramPacket(message, message.length, this._group, DNSConstants.MDNS_PORT);
 
             if (logger.isLoggable(Level.FINEST)) {
                 try {
@@ -1528,10 +1538,10 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                         logger.finest("send(" + this.getName() + ") JmDNS out:" + msg.print(true));
                     }
                 } catch (final IOException e) {
-                    logger.throwing(getClass().toString(), "send(" + this.getName() + ") - JmDNS can not parse what it sends!!!", e);
+                    logger.throwing(this.getClass().toString(), "send(" + this.getName() + ") - JmDNS can not parse what it sends!!!", e);
                 }
             }
-            final MulticastSocket ms = _socket;
+            final MulticastSocket ms = this._socket;
             if (ms != null && !ms.isClosed()) {
                 ms.send(packet);
             }
@@ -1624,7 +1634,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * @see javax.jmdns.impl.DNSTaskStarter#startServiceInfoResolver(javax.jmdns.impl.ServiceInfoImpl)
      */
     @Override
-    public void startServiceInfoResolver(ServiceInfoImpl info) {
+    public void startServiceInfoResolver(final ServiceInfoImpl info) {
         DNSTaskStarter.Factory.getInstance().getStarter(this.getDns()).startServiceInfoResolver(info);
     }
 
@@ -1642,7 +1652,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * @see javax.jmdns.impl.DNSTaskStarter#startServiceResolver(java.lang.String)
      */
     @Override
-    public void startServiceResolver(String type) {
+    public void startServiceResolver(final String type) {
         DNSTaskStarter.Factory.getInstance().getStarter(this.getDns()).startServiceResolver(type);
     }
 
@@ -1651,7 +1661,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * @see javax.jmdns.impl.DNSTaskStarter#startResponder(javax.jmdns.impl.DNSIncoming, int)
      */
     @Override
-    public void startResponder(DNSIncoming in, int port) {
+    public void startResponder(final DNSIncoming in, final int port) {
         DNSTaskStarter.Factory.getInstance().getStarter(this.getDns()).startResponder(in, port);
     }
 
@@ -1664,9 +1674,9 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         @Override
         public void run() {
             try {
-                _shutdown = null;
-                close();
-            } catch (Throwable exception) {
+                JmDNSImpl.this._shutdown = null;
+                JmDNSImpl.this.close();
+            } catch (final Throwable exception) {
                 System.err.println("Error while shuting down. " + exception);
             }
         }
@@ -1687,18 +1697,18 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
         // We need some definite lock here as we may have multiple timer running in the same thread that will not be stopped by the reentrant lock
         // in the state object. This is only a problem in this case as we are going to execute in seperate thread so that the timer can clear.
-        synchronized (_recoverLock) {
+        synchronized (this._recoverLock) {
             // Stop JmDNS
             // This protects against recursive calls
             if (this.cancelState()) {
                 logger.finer(this.getName() + "recover() thread " + Thread.currentThread().getName());
-                Thread recover = new Thread(this.getName() + ".recover()") {
+                final Thread recover = new Thread(this.getName() + ".recover()") {
                     /**
                      * {@inheritDoc}
                      */
                     @Override
                     public void run() {
-                        __recover();
+                        JmDNSImpl.this.__recover();
                     }
                 };
                 recover.start();
@@ -1718,7 +1728,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         this.purgeTimer();
 
         // We need to keep a copy for reregistration
-        final Collection<ServiceInfo> oldServiceInfos = new ArrayList<ServiceInfo>(getServices().values());
+        final Collection<ServiceInfo> oldServiceInfos = new ArrayList<ServiceInfo>(this.getServices().values());
 
         // Cancel all services
         this.unregisterAllServices();
@@ -1743,7 +1753,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             //
             // All is clear now start the services
             //
-            for (ServiceInfo info : oldServiceInfos) {
+            for (final ServiceInfo info : oldServiceInfos) {
                 ((ServiceInfoImpl) info).recoverState();
             }
             this.recoverState();
@@ -1766,10 +1776,10 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
     }
 
     public void cleanCache() {
-        long now = System.currentTimeMillis();
-        for (DNSEntry entry : this.getCache().allValues()) {
+        final long now = System.currentTimeMillis();
+        for (final DNSEntry entry : this.getCache().allValues()) {
             try {
-                DNSRecord record = (DNSRecord) entry;
+                final DNSRecord record = (DNSRecord) entry;
                 if (record.isExpired(now)) {
                     this.updateRecord(now, record, Operation.Remove);
                     this.getCache().removeDNSEntry(record);
@@ -1777,7 +1787,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                     // we should query for the record we care about i.e. those in the service collectors
                     this.renewServiceCollector(record);
                 }
-            } catch (Exception exception) {
+            } catch (final Exception exception) {
                 logger.log(Level.SEVERE, this.getName() + ".Error while reaping records: " + entry, exception);
                 logger.severe(this.toString());
             }
@@ -1819,21 +1829,21 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             this.cancelStateTimer();
 
             // Stop the executor
-            _executor.shutdown();
+            this._executor.shutdown();
 
             // close socket
             this.closeMulticastSocket();
 
             // remove the shutdown hook
-            if (_shutdown != null) {
-                Runtime.getRuntime().removeShutdownHook(_shutdown);
+            if (this._shutdown != null) {
+                Runtime.getRuntime().removeShutdownHook(this._shutdown);
             }
 
             if (logger.isLoggable(Level.FINER)) {
                 logger.finer("JmDNS closed.");
             }
         }
-        advanceState(null);
+        this.advanceState(null);
     }
 
     /**
@@ -1842,7 +1852,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
     @Override
     @Deprecated
     public void printServices() {
-        System.err.println(toString());
+        System.err.println(this.toString());
     }
 
     /**
@@ -1853,40 +1863,40 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         final StringBuilder aLog = new StringBuilder(2048);
         aLog.append("\t---- Local Host -----");
         aLog.append("\n\t");
-        aLog.append(_localHost);
+        aLog.append(this._localHost);
         aLog.append("\n\t---- Services -----");
-        for (String key : _services.keySet()) {
+        for (final String key : this._services.keySet()) {
             aLog.append("\n\t\tService: ");
             aLog.append(key);
             aLog.append(": ");
-            aLog.append(_services.get(key));
+            aLog.append(this._services.get(key));
         }
         aLog.append("\n");
         aLog.append("\t---- Types ----");
-        for (String key : _serviceTypes.keySet()) {
-            ServiceTypeEntry subtypes = _serviceTypes.get(key);
+        for (final String key : this._serviceTypes.keySet()) {
+            final ServiceTypeEntry subtypes = this._serviceTypes.get(key);
             aLog.append("\n\t\tType: ");
             aLog.append(subtypes.getType());
             aLog.append(": ");
             aLog.append(subtypes.isEmpty() ? "no subtypes" : subtypes);
         }
         aLog.append("\n");
-        aLog.append(_cache.toString());
+        aLog.append(this._cache.toString());
         aLog.append("\n");
         aLog.append("\t---- Service Collectors ----");
-        for (String key : _serviceCollectors.keySet()) {
+        for (final String key : this._serviceCollectors.keySet()) {
             aLog.append("\n\t\tService Collector: ");
             aLog.append(key);
             aLog.append(": ");
-            aLog.append(_serviceCollectors.get(key));
+            aLog.append(this._serviceCollectors.get(key));
         }
         aLog.append("\n");
         aLog.append("\t---- Service Listeners ----");
-        for (String key : _serviceListeners.keySet()) {
+        for (final String key : this._serviceListeners.keySet()) {
             aLog.append("\n\t\tService Listener: ");
             aLog.append(key);
             aLog.append(": ");
-            aLog.append(_serviceListeners.get(key));
+            aLog.append(this._serviceListeners.get(key));
         }
         return aLog.toString();
     }
@@ -1895,7 +1905,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public ServiceInfo[] list(String type) {
+    public ServiceInfo[] list(final String type) {
         return this.list(type, DNSConstants.SERVICE_INFO_TIMEOUT);
     }
 
@@ -1903,7 +1913,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public ServiceInfo[] list(String type, long timeout) {
+    public ServiceInfo[] list(final String type, final long timeout) {
         this.cleanCache();
         // Implementation note: The first time a list for a given type is
         // requested, a ServiceCollector is created which collects service
@@ -1913,17 +1923,17 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         // instance for each service type which increases network traffic a
         // little.
 
-        String loType = type.toLowerCase();
+        final String loType = type.toLowerCase();
 
         boolean newCollectorCreated = false;
         if (this.isCanceling() || this.isCanceled()) {
             return new ServiceInfo[0];
         }
 
-        ServiceCollector collector = _serviceCollectors.get(loType);
+        ServiceCollector collector = this._serviceCollectors.get(loType);
         if (collector == null) {
-            newCollectorCreated = _serviceCollectors.putIfAbsent(loType, new ServiceCollector(type)) == null;
-            collector = _serviceCollectors.get(loType);
+            newCollectorCreated = this._serviceCollectors.putIfAbsent(loType, new ServiceCollector(type)) == null;
+            collector = this._serviceCollectors.get(loType);
             if (newCollectorCreated) {
                 this.addServiceListener(type, collector, ListenerStatus.SYNCHONEOUS);
             }
@@ -1939,7 +1949,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public Map<String, ServiceInfo[]> listBySubtype(String type) {
+    public Map<String, ServiceInfo[]> listBySubtype(final String type) {
         return this.listBySubtype(type, DNSConstants.SERVICE_INFO_TIMEOUT);
     }
 
@@ -1947,19 +1957,19 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      * {@inheritDoc}
      */
     @Override
-    public Map<String, ServiceInfo[]> listBySubtype(String type, long timeout) {
-        Map<String, List<ServiceInfo>> map = new HashMap<String, List<ServiceInfo>>(5);
-        for (ServiceInfo info : this.list(type, timeout)) {
-            String subtype = info.getSubtype().toLowerCase();
+    public Map<String, ServiceInfo[]> listBySubtype(final String type, final long timeout) {
+        final Map<String, List<ServiceInfo>> map = new HashMap<String, List<ServiceInfo>>(5);
+        for (final ServiceInfo info : this.list(type, timeout)) {
+            final String subtype = info.getSubtype().toLowerCase();
             if (!map.containsKey(subtype)) {
                 map.put(subtype, new ArrayList<ServiceInfo>(10));
             }
             map.get(subtype).add(info);
         }
 
-        Map<String, ServiceInfo[]> result = new HashMap<String, ServiceInfo[]>(map.size());
-        for (String subtype : map.keySet()) {
-            List<ServiceInfo> infoForSubType = map.get(subtype);
+        final Map<String, ServiceInfo[]> result = new HashMap<String, ServiceInfo[]>(map.size());
+        for (final String subtype : map.keySet()) {
+            final List<ServiceInfo> infoForSubType = map.get(subtype);
             result.put(subtype, infoForSubType.toArray(new ServiceInfo[infoForSubType.size()]));
         }
 
@@ -1968,25 +1978,25 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
     /**
      * This method disposes all ServiceCollector instances which have been created by calls to method <code>list(type)</code>.
-     *
+     * 
      * @see #list
      */
     private void disposeServiceCollectors() {
         if (logger.isLoggable(Level.FINER)) {
             logger.finer("disposeServiceCollectors()");
         }
-        for (String type : _serviceCollectors.keySet()) {
-            ServiceCollector collector = _serviceCollectors.get(type);
+        for (final String type : this._serviceCollectors.keySet()) {
+            final ServiceCollector collector = this._serviceCollectors.get(type);
             if (collector != null) {
                 this.removeServiceListener(type, collector);
-                _serviceCollectors.remove(type, collector);
+                this._serviceCollectors.remove(type, collector);
             }
         }
     }
 
     /**
      * Instances of ServiceCollector are used internally to speed up the performance of method <code>list(type)</code>.
-     *
+     * 
      * @see #list
      */
     private static class ServiceCollector implements ServiceListener {
@@ -2012,33 +2022,33 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
          */
         private volatile boolean                          _needToWaitForInfos;
 
-        public ServiceCollector(String type) {
+        public ServiceCollector(final String type) {
             super();
-            _infos = new ConcurrentHashMap<String, ServiceInfo>();
-            _events = new ConcurrentHashMap<String, ServiceEvent>();
-            _type = type;
-            _needToWaitForInfos = true;
+            this._infos = new ConcurrentHashMap<String, ServiceInfo>();
+            this._events = new ConcurrentHashMap<String, ServiceEvent>();
+            this._type = type;
+            this._needToWaitForInfos = true;
         }
 
         /**
          * A service has been added.
-         *
+         * 
          * @param event
          *            service event
          */
         @Override
-        public void serviceAdded(ServiceEvent event) {
+        public void serviceAdded(final ServiceEvent event) {
             synchronized (this) {
                 ServiceInfo info = event.getInfo();
                 if ((info != null) && (info.hasData())) {
-                    _infos.put(event.getName(), info);
+                    this._infos.put(event.getName(), info);
                 } else {
-                    String subtype = (info != null ? info.getSubtype() : "");
+                    final String subtype = (info != null ? info.getSubtype() : "");
                     info = ((JmDNSImpl) event.getDNS()).resolveServiceInfo(event.getType(), event.getName(), subtype, true);
                     if (info != null) {
-                        _infos.put(event.getName(), info);
+                        this._infos.put(event.getName(), info);
                     } else {
-                        _events.put(event.getName(), event);
+                        this._events.put(event.getName(), event);
                     }
                 }
             }
@@ -2046,41 +2056,41 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
         /**
          * A service has been removed.
-         *
+         * 
          * @param event
          *            service event
          */
         @Override
-        public void serviceRemoved(ServiceEvent event) {
+        public void serviceRemoved(final ServiceEvent event) {
             synchronized (this) {
-                _infos.remove(event.getName());
-                _events.remove(event.getName());
+                this._infos.remove(event.getName());
+                this._events.remove(event.getName());
             }
         }
 
         /**
          * A service has been resolved. Its details are now available in the ServiceInfo record.
-         *
+         * 
          * @param event
          *            service event
          */
         @Override
-        public void serviceResolved(ServiceEvent event) {
+        public void serviceResolved(final ServiceEvent event) {
             synchronized (this) {
-                _infos.put(event.getName(), event.getInfo());
-                _events.remove(event.getName());
+                this._infos.put(event.getName(), event.getInfo());
+                this._events.remove(event.getName());
             }
         }
 
         /**
          * Returns an array of all service infos which have been collected by this ServiceCollector.
-         *
+         * 
          * @param timeout
          *            timeout if the info list is empty.
          * @return Service Info array
          */
-        public ServiceInfo[] list(long timeout) {
-            if (_infos.isEmpty() || !_events.isEmpty() || _needToWaitForInfos) {
+        public ServiceInfo[] list(final long timeout) {
+            if (this._infos.isEmpty() || !this._events.isEmpty() || this._needToWaitForInfos) {
                 long loops = (timeout / 200L);
                 if (loops < 1) {
                     loops = 1;
@@ -2091,13 +2101,13 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                     } catch (final InterruptedException e) {
                         /* Stub */
                     }
-                    if (_events.isEmpty() && !_infos.isEmpty() && !_needToWaitForInfos) {
+                    if (this._events.isEmpty() && !this._infos.isEmpty() && !this._needToWaitForInfos) {
                         break;
                     }
                 }
             }
-            _needToWaitForInfos = false;
-            return _infos.values().toArray(new ServiceInfo[_infos.size()]);
+            this._needToWaitForInfos = false;
+            return this._infos.values().toArray(new ServiceInfo[this._infos.size()]);
         }
 
         /**
@@ -2107,36 +2117,36 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         public String toString() {
             final StringBuffer aLog = new StringBuffer();
             aLog.append("\n\tType: ");
-            aLog.append(_type);
-            if (_infos.isEmpty()) {
+            aLog.append(this._type);
+            if (this._infos.isEmpty()) {
                 aLog.append("\n\tNo services collected.");
             } else {
                 aLog.append("\n\tServices");
-                for (String key : _infos.keySet()) {
+                for (final String key : this._infos.keySet()) {
                     aLog.append("\n\t\tService: ");
                     aLog.append(key);
                     aLog.append(": ");
-                    aLog.append(_infos.get(key));
+                    aLog.append(this._infos.get(key));
                 }
             }
-            if (_events.isEmpty()) {
+            if (this._events.isEmpty()) {
                 aLog.append("\n\tNo event queued.");
             } else {
                 aLog.append("\n\tEvents");
-                for (String key : _events.keySet()) {
+                for (final String key : this._events.keySet()) {
                     aLog.append("\n\t\tEvent: ");
                     aLog.append(key);
                     aLog.append(": ");
-                    aLog.append(_events.get(key));
+                    aLog.append(this._events.get(key));
                 }
             }
             return aLog.toString();
         }
     }
 
-    static String toUnqualifiedName(String type, String qualifiedName) {
-        String loType = type.toLowerCase();
-        String loQualifiedName = qualifiedName.toLowerCase();
+    static String toUnqualifiedName(final String type, final String qualifiedName) {
+        final String loType = type.toLowerCase();
+        final String loQualifiedName = qualifiedName.toLowerCase();
         if (loQualifiedName.endsWith(loType) && !(loQualifiedName.equals(loType))) {
             return qualifiedName.substring(0, qualifiedName.length() - type.length() - 1);
         }
@@ -2144,23 +2154,23 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
     }
 
     public Map<String, ServiceInfo> getServices() {
-        return _services;
+        return this._services;
     }
 
-    public void setLastThrottleIncrement(long lastThrottleIncrement) {
+    public void setLastThrottleIncrement(final long lastThrottleIncrement) {
         this._lastThrottleIncrement = lastThrottleIncrement;
     }
 
     public long getLastThrottleIncrement() {
-        return _lastThrottleIncrement;
+        return this._lastThrottleIncrement;
     }
 
-    public void setThrottle(int throttle) {
+    public void setThrottle(final int throttle) {
         this._throttle = throttle;
     }
 
     public int getThrottle() {
-        return _throttle;
+        return this._throttle;
     }
 
     public static Random getRandom() {
@@ -2168,35 +2178,35 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
     }
 
     public void ioLock() {
-        _ioLock.lock();
+        this._ioLock.lock();
     }
 
     public void ioUnlock() {
-        _ioLock.unlock();
+        this._ioLock.unlock();
     }
 
-    public void setPlannedAnswer(DNSIncoming plannedAnswer) {
+    public void setPlannedAnswer(final DNSIncoming plannedAnswer) {
         this._plannedAnswer = plannedAnswer;
     }
 
     public DNSIncoming getPlannedAnswer() {
-        return _plannedAnswer;
+        return this._plannedAnswer;
     }
 
-    void setLocalHost(HostInfo localHost) {
+    void setLocalHost(final HostInfo localHost) {
         this._localHost = localHost;
     }
 
     public Map<String, ServiceTypeEntry> getServiceTypes() {
-        return _serviceTypes;
+        return this._serviceTypes;
     }
 
     public MulticastSocket getSocket() {
-        return _socket;
+        return this._socket;
     }
 
     public InetAddress getGroup() {
-        return _group;
+        return this._group;
     }
 
     @Override
@@ -2205,8 +2215,8 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
     }
 
     @Override
-    public Delegate setDelegate(Delegate delegate) {
-        Delegate previous = this._delegate;
+    public Delegate setDelegate(final Delegate delegate) {
+        final Delegate previous = this._delegate;
         this._delegate = delegate;
         return previous;
     }
